@@ -5,9 +5,67 @@
         
 <mapper namespace="open.shop.domain.member.MemberMapper">
 
+	<resultMap id="memberMap" type="member">
+		<id property="id" column="member_id"/>
+		<result property="name" column="member_name"/>
+		<result property="password" column="member_password"/>
+		<result property="address" column="member_address"/>
+		<result property="phone" column="member_phone"/>		
+	</resultMap>
+	
+	
+	
+	<insert id="save" parameterType="member" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO 
+		member(member_name, member_password, member_address, member_phone)
+		VALUES
+		(#{name}, #{password}, #{address}, #{phone})
+	</insert>
+	
+	<update id="update" parameterType="member" useGeneratedKeys="true" keyProperty="id">
+		UPDATE member
+		SET 
+		member_name=#{name}, member_password=#{password}, 
+		member_address=#{address}, member_phone=#{phone}
+		WHERE 
+		member_id=#{id}	
+	</update>
 
-
-
+	<delete id="delete" parameterType="Long">
+		DELETE
+		FROM member
+		WHERE 
+		member_id=#{id}
+	</delete>
+	
+	
+	
+	
+	<select id="findById" parameterType="Long" resultMap="memberMap">
+		SELECT 
+		member_id, member_name, member_password, member_address, member_phone
+		FROM member
+		WHERE 
+		member_id=#{id}
+	</select>
+	
+	<select id="findByName" parameterType="String" resultMap="memberMap">
+		SELECT 
+		member_id, member_name, member_password, member_address, member_phone
+		FROM member
+		WHERE 
+		member_name=#{name}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 </mapper>
